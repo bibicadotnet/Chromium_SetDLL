@@ -17,7 +17,7 @@ jobs:
     - name: Get latest release from source
       id: source_release
       run: |
-        SOURCE_TAG=$(curl -s https://api.github.com/repos/Bush2021/chrome_plus/releases/latest | jq -r '.tag_name')
+        SOURCE_TAG=$(curl -s https://api.github.com/repos/Bush2021/chrome_plus/releases | jq -r '[.[] | select(.tag_name != "null" and (.assets | length) > 0)] | .[0].tag_name')
         
         if [ "$SOURCE_TAG" = "null" ] || [ -z "$SOURCE_TAG" ]; then
           echo "No valid release found"
